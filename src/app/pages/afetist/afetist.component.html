@@ -1,0 +1,78 @@
+<ion-menu #ionMenu color="white" contentId="map" type="overlay">
+  <ion-header>
+    <ion-toolbar style="background: #3f51b5" color="white">
+      <ion-title style="color: white">
+        <div style="display: flex; justify-content: space-between">
+          <span> Sonuç Listesi </span>
+          <ion-menu-toggle>
+          </ion-menu-toggle>
+        </div>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content style="--background: whitesmoke; --ion-item-background: whitesmoke" color="white" class="ion-padding">
+    <ion-note>
+      Haritada zoom olmak için tıklayınız, diğer İşlemler için Sola
+      kaydırınız</ion-note>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-top: 10px;">
+      <button style="align-items: center;display: flex;width: 100%;color:black;margin-bottom: 10px;" class="nav-link active" 
+
+      id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button"  role="tab" aria-controls="pills-home" aria-selected="true">
+        <ion-icon class="button-icon" name="home-outline"></ion-icon>
+        Kapanacak Yollar
+      </button>
+
+      <button style="align-items: center;display: flex;color:black;width: 100%" class="nav-link" id="pills-poi-tab"
+        data-bs-toggle="pill" data-bs-target="#pills-poi" type="button" role="tab" aria-controls="pills-poi"
+        aria-selected="false">
+        <ion-icon  class="button-icon" name="car-outline"></ion-icon>
+        Toplanma Alanları
+      </button>
+    </ul>
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+      <ion-list>
+        <div style="margin-top: 10px; margin-bottom: 10px; text-align: center">
+          <ion-note style="font-weight: 500; font-size: medium"
+            >Bilgi Almak için sola kaydırınız</ion-note >
+        </div>
+        <ion-item-sliding *ngFor="let item of kapanacakYollarList">
+          <ion-menu-toggle>
+            <ion-item  (click)="goToFeatureYol(item)">{{ item.adi }} </ion-item>
+          </ion-menu-toggle>
+          <ion-item-options side="end">
+            <ion-item-option >
+              <ion-icon
+                slot="icon-only"
+                name="information-circle-outline"
+              ></ion-icon>
+            </ion-item-option>
+            <ion-item-option >
+              
+              <ion-icon
+              slot="icon-only"
+               name="navigate-circle-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+          
+        </ion-item-sliding>
+      </ion-list>    </div>
+    <div class="tab-pane fade show" id="pills-poi" role="tabpane2" aria-labelledby="pills-poi-tab">
+      <ion-note style="font-weight: 500; font-size: medium"
+      >Bilgi Almak için sola kaydırınız</ion-note >
+      <ion-item-sliding *ngFor="let item of afetpoiList">
+        <ion-menu-toggle>
+          <ion-item  (click)="goToFeaturePoi(item)">{{ item.adi }} </ion-item>
+        </ion-menu-toggle>
+        <ion-item-options side="end">
+          <ion-item-option >
+            <ion-icon
+              slot="icon-only"
+              name="information-circle-outline"
+            ></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </div>
+  </ion-content>
+</ion-menu>
+<div #map id="map"></div>

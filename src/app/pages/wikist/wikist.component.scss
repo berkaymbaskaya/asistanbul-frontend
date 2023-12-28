@@ -1,0 +1,9 @@
+mat-drawer {
+  width: 20% !important;
+}
+
+@media only screen and (max-width: 600px) {
+  mat-drawer {
+    width: 100% !important;
+  }
+}

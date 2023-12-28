@@ -1,0 +1,129 @@
+.robot-message-container {
+  display: flex;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.suggestion {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.text-container-robot {
+  background: #854c56;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  width: 70%;
+}
+.text-container-loader {
+  background: #854c56;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  width: 10%;
+  text-align: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+@keyframes effectLoad {
+  0% {
+    opacity: 1;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  25% {
+    opacity: 0.5;
+    margin-left: 5px; /* Sağa doğru hareket */
+    margin-right: 0; /* Sıfırla */
+  }
+  75% {
+    opacity: 0.3;
+    margin-left: 0; /* Sıfırla */
+    margin-right: 5px; /* Sola doğru hareket */
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+.effect-message-loader {
+  animation: effectLoad 1s ease-in-out infinite;
+  width: 4rem;
+}
+.text-container-human {
+  background: darkslateblue;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  width: 70%;
+}
+.human-message-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.message {
+  padding: 5px;
+  color: white;
+}
+.input-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
+mat-icon {
+  font-size: 30px;
+  height: 30px;
+  width: 30px;
+  color: white;
+}
+.messageBoxContainer {
+  overflow-y: scroll;
+  height: 90%;
+}
+.chat-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+.header-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  margin-left: 5px;
+}
+@media screen and (max-width: 700px) {
+  .chat-container {
+    background-color: transparent;
+    height: 100%;
+    padding: 10px;
+  }
+
+  .chat-header {
+    display: none;
+  }
+}
+@media screen and (min-width: 700px) {
+  .modal-header {
+    display: none;
+  }
+  .chat-container {
+    height: 500px;
+    width: 450px;
+  }
+  .messageBoxContainer {
+    overflow-y: scroll;
+    height: 80%;
+  }
+  .chat-header {
+    display: flex;
+    justify-content: flex-end;
+    height: 10%;
+    margin: 0;
+  }
+}

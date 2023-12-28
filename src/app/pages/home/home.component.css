@@ -1,0 +1,21 @@
+#map {
+  height: 100%;
+}
+#fab {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+ion-item {
+  color: black !important;
+}
+@media screen and (min-width: 700px) {
+  #chatModal {
+    display: none !important;
+  }
+}
+
+ion-item :hover {
+  background-color: #ebebeb;
+}

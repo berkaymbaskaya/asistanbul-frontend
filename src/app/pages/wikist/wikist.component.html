@@ -1,0 +1,25 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <ion-list>
+      <div style="margin-top: 10px; margin-bottom: 10px; text-align: center">
+        <ion-note style="font-weight: 500; font-size: medium"
+          >Bilgi Almak sola kaydırınız</ion-note
+        >
+      </div>
+      <ion-item-sliding *ngFor="let item of data">
+        <ion-item (click)="goMap(item)">{{ item.isim }} </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="openDetail(item)">
+            <ion-icon
+              slot="icon-only"
+              name="information-circle-outline"
+            ></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="height: 92vh" #map id="map"></div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,71 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <mat-icon class="header-icon"> linear_scale</mat-icon>
+    <mat-icon class="header-icon">fullscreen</mat-icon>
+    <mat-icon (click)="closeAsistan()" class="header-icon">close</mat-icon>
+  </div>
+  <div #messageBoxContainer class="messageBoxContainer">
+    <ng-container *ngFor="let item of allMessages">
+      <div [ngClass]="item.classNameContainer" style="width: 100%">
+        <img
+          *ngIf="item.from == 'robot'"
+          style="height: 60px; width: 60px; margin-right: 10px; scale: 1.5"
+          src="../../../assets/icons/chat_icon.png"
+        />
+        <div [ngClass]="item.classNameText">
+          <p class="message">{{ item.text }}</p>
+        </div>
+        <mat-icon *ngIf="item.from == 'human'" style="margin-left: 10px">
+          person_pin</mat-icon
+        >
+      </div>
+    </ng-container>
+    <div *ngIf="!messageLoadVisible && suggestionVisible" class="suggestion">
+      <mat-chip-listbox aria-label="Fish selection">
+        <mat-chip-option
+          value="locate"
+          (selectionChange)="onSelectionSuggesttion($event)"
+          >Konumumu Kullan
+        </mat-chip-option>
+        <mat-chip-option
+          value="select"
+          (selectionChange)="onSelectionSuggesttion($event)"
+          >Haritadan İşaretle</mat-chip-option
+        >
+      </mat-chip-listbox>
+    </div>
+    <div
+      *ngIf="messageLoadVisible"
+      class="robot-message-container"
+      style="width: 100%"
+    >
+      <img
+        style="height: 60px; width: 60px; margin-right: 10px; scale: 1.5"
+        src="../../../assets/icons/chat_icon.png"
+      />
+      <div class="text-container-loader">
+        <p class="effect-message-loader">...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <mat-form-field
+      style="width: 100%; margin-right: 1rem"
+      class="example-full-width"
+    >
+      <mat-label>Mesajınız</mat-label>
+      <input
+        [disabled]="inputIsActive"
+        (keydown.enter)="sendMessagge()"
+        [(ngModel)]="humanMessage"
+        matInput
+        placeholder="Mesajınız "
+        value=""
+      />
+    </mat-form-field>
+    <mat-icon style="color: white" (click)="sendMessagge()" class="mat-icon"
+      >send</mat-icon
+    >
+  </div>
+</div>

@@ -1,0 +1,78 @@
+@import url(@angular/material/prebuilt-themes/indigo-pink.css);
+/* config */
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  --ion-item-background: white;
+}
+
+app-root {
+  overflow-y: scroll;
+  width: 100%;
+}
+app-home {
+  display: flex;
+}
+.spinner-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10999;
+  background-color: rgb(106 101 101 / 30%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+ion-modal .ion-page {
+  position: relative;
+  contain: layout style;
+  height: 100%;
+  --ion-background-color: #151515 !important;
+  background: #151515;
+}
+ion-modal {
+  --ion-toolbar-background: #334193 !important;
+  --ion-color-step-100: whitesmoke !important;
+}
+@media screen and (max-width: 1000) {
+  ion-modal {
+    display: none !important;
+  }
+}
+.toolbar-title {
+  display: block;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: auto;
+  display: flex !important;
+  justify-content: space-between !important;
+}
+/* Opsiyonel olarak, scrollbar rengini değiştirmek için aşağıdaki stil kullanılabilir */
+::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #854c56 !important;
+}
+.my-popup {
+  width: 350px;
+}
+ion-item:hover {
+  cursor: pointer !important;
+  --background: #efefef;
+}
+.fade:not(.show) {
+  opacity: 0;
+  display: none!important;
+}

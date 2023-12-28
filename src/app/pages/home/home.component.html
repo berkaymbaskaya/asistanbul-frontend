@@ -1,0 +1,190 @@
+<div *ngIf="loadVisible" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<ion-menu #ionMenu color="white" contentId="main-content" type="overlay">
+  <ion-header>
+    <ion-toolbar style="background: #3f51b5" color="white">
+      <ion-title style="color: white">
+        <div style="display: flex; justify-content: space-between">
+          <span> Sonuç Listesi </span>
+          <ion-menu-toggle
+            ><ion-icon
+              style="color: white; font-size: 30px"
+              name="arrow-back-circle-outline"
+            ></ion-icon>
+          </ion-menu-toggle>
+        </div>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content
+    style="--background: whitesmoke; --ion-item-background: whitesmoke"
+    color="white"
+    class="ion-padding"
+  >
+    <ion-note>
+      Haritada zoom olmak için tıklayınız, diğer İşlemler için Sola
+      kaydırınız</ion-note
+    >
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of poiData | orderBy : 'distance'">
+        <ion-item style="cursor: pointer" (click)="goToPoi(item)">
+          <div
+            style="display: flex; flex-direction: column; margin-bottom: 1rem"
+          >
+            <ion-card-title
+              style="
+                font-size: medium;
+                margin-bottom: 5px;
+                font-weight: 500;
+                margin-top: 10px;
+              "
+              >{{ item.isim }}</ion-card-title
+            >
+            <ion-card-subtitle style="margin-bottom: 2px"
+              >{{ item.mahalle }} / {{ item.ilce }}</ion-card-subtitle
+            >
+            <ion-card-subtitle>{{ item.adres }} </ion-card-subtitle>
+            <ion-note
+              >Mesafe: {{ item.distance / 1000 | number : "1.2-2" }}&nbsp; km
+            </ion-note>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="googleMaps(item.enlem, item.boylam)">
+            <ion-icon
+              slot="icon-only"
+              name="navigate-circle-outline"
+            ></ion-icon>
+          </ion-item-option>
+          <ion-item-option
+            (click)="whatsApp(item.enlem, item.boylam)"
+            style="background: #25d366"
+          >
+            <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding> </ion-list
+  ></ion-content>
+</ion-menu>
+
+<mat-drawer-container style="width: 100%" class="example-container">
+  <mat-drawer style="width: 25%" #drawer mode="side">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+    <mat-list>
+      <div mat-subheader>Notes</div>
+      <mat-list-item *ngFor="let item of filterPoi">
+        <mat-icon style="color: #a21414" matListItemIcon>location_on</mat-icon>
+        <div matListItemTitle>{{ item.mahalle }}</div>
+        <div matListItemLine>{{ item.ilce }}</div>
+        <mat-icon style="color: #a21414" matListItemIcon>location_on</mat-icon>
+        <mat-icon style="color: #a21414" matListItemIcon>location_on</mat-icon>
+      </mat-list-item>
+      <div></div> </mat-list
+  ></mat-drawer>
+  <mat-drawer-content id="main-content">
+    <div class="example-sidenav-content" style="height: 100%; width: 100%">
+      <div style="height: 92vh" #map id="map"></div>
+      <div
+        *ngIf="selectionMapVisible"
+        style="
+          width: 100%;
+          display: flex;
+          text-align: center;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <div
+          style="
+            position: absolute;
+            bottom: 0;
+            z-index: 999;
+            background: #333333;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <p style="height: fit-content; margin: 0">Haritadan Konum Seçiniz</p>
+        </div>
+      </div>
+
+      <button
+        (click)="openAsistan()"
+        id="fab"
+        mat-fab
+        color="primary"
+        aria-label="Example icon button with a delete icon"
+      >
+        <mat-icon>speaker_notes</mat-icon>
+      </button>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<ion-modal
+  id="chatModal"
+  *ngIf="this.deviceType == 'mobil'"
+  #chatModal
+  [breakpoints]="[1.0, 0.1]"
+  [initialBreakpoint]="1.0"
+  [isOpen]="modalIsOpen"
+  [backdropBreakpoint]="0.1"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title style="color: white">asistanbul.ai</ion-title>
+        <ion-buttons slot="end">
+          <ion-button
+            *ngIf="modalPoint == 1"
+            (click)="toogleModal()"
+            color="white"
+            ><ion-icon
+              style="height: 30px; width: 30px; color: white"
+              name="arrow-down-circle-outline"
+            ></ion-icon
+          ></ion-button>
+          <ion-button
+            *ngIf="modalPoint == 0.1"
+            (click)="toogleModal()"
+            color="dark"
+            ><ion-icon
+              style="height: 30px; width: 30px; color: white"
+              name="arrow-up-circle-outline"
+            ></ion-icon
+          ></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <app-chat [hidden]="!modalIsOpen"></app-chat>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- 
+<ion-modal #dataListModal [breakpoints]="[1.0,0.1]" [initialBreakpoint]="1.0" [isOpen]="modalIsOpen"  [backdropBreakpoint]="0.1"> 
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Asistanbul</ion-title>
+        <ion-buttons slot="end">
+          <ion-button *ngIf="modalPoint == 1" (click)="toogleModal()" color="dark" ><ion-icon style="height: 30px;width: 30px;" name="arrow-down-circle-outline"></ion-icon></ion-button>
+          <ion-button *ngIf="modalPoint == 0.1" (click)="toogleModal()" color="dark" ><ion-icon style="height: 30px;width: 30px;" name="arrow-up-circle-outline"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+   <app-chat [hidden]="!modalIsOpen"></app-chat>
+    </ion-content>
+  </ng-template>
+</ion-modal> -->
